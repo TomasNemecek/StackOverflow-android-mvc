@@ -1,7 +1,6 @@
 package com.nemecek.stackoverflow.screens.questionslist;
 
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.widget.Toast;
 
 import com.nemecek.stackoverflow.R;
@@ -10,6 +9,7 @@ import com.nemecek.stackoverflow.networking.QuestionSchema;
 import com.nemecek.stackoverflow.networking.QuestionsListResponseSchema;
 import com.nemecek.stackoverflow.networking.StackoverflowApi;
 import com.nemecek.stackoverflow.questions.Question;
+import com.nemecek.stackoverflow.screens.questiondetails.QuestionDetailsActivity;
 import com.nemecek.stackoverflow.screens.common.BaseActivity;
 
 import java.util.ArrayList;
@@ -77,6 +77,6 @@ public class QuestionsListActivity extends BaseActivity implements QuestionsList
 
     @Override
     public void onQuestionClicked(Question question) {
-        Toast.makeText(this, question.getTitle(), Toast.LENGTH_SHORT).show();
+        QuestionDetailsActivity.start(this, question.getId());
     }
 }
