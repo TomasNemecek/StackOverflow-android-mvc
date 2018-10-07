@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import com.nemecek.stackoverflow.R;
 import com.nemecek.stackoverflow.questions.Question;
 import com.nemecek.stackoverflow.screens.common.BaseObservableViewMvc;
+import com.nemecek.stackoverflow.screens.common.ViewMvcFactory;
 
 import java.util.List;
 
@@ -15,12 +16,12 @@ public class QuestionsListViewMvcImpl extends BaseObservableViewMvc<QuestionsLis
     private RecyclerView mRecyclerQuestions;
     private QuestionsRecyclerAdapter mQuestionsListAdapter;
 
-    public QuestionsListViewMvcImpl(LayoutInflater inflater, ViewGroup parent) {
+    public QuestionsListViewMvcImpl(LayoutInflater inflater, ViewGroup parent, ViewMvcFactory viewMvcFactory) {
         setRootView(inflater.inflate(R.layout.layout_questions_list, parent, false));
 
         mRecyclerQuestions = findViewById(R.id.rw_questions);
         mRecyclerQuestions.setLayoutManager(new LinearLayoutManager(getContext()));
-        mQuestionsListAdapter = new QuestionsRecyclerAdapter(inflater, this);
+        mQuestionsListAdapter = new QuestionsRecyclerAdapter(this, viewMvcFactory);
         mRecyclerQuestions.setAdapter(mQuestionsListAdapter);
     }
 

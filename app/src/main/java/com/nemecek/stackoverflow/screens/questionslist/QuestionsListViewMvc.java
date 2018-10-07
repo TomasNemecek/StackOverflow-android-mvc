@@ -5,7 +5,7 @@ import com.nemecek.stackoverflow.screens.common.ObservableViewMvc;
 
 import java.util.List;
 
-interface QuestionsListViewMvc extends ObservableViewMvc<QuestionsListViewMvc.Listener> {
+public interface QuestionsListViewMvc extends ObservableViewMvc<QuestionsListViewMvc.Listener> {
     interface Listener {
         void onQuestionClicked(Question question);
     }

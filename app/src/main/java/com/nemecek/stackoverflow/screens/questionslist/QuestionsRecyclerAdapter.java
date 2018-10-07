@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
 import com.nemecek.stackoverflow.questions.Question;
+import com.nemecek.stackoverflow.screens.common.ViewMvcFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,15 +27,14 @@ public class QuestionsRecyclerAdapter extends RecyclerView.Adapter<QuestionsRecy
             this.mViewMvc = viewMvc;
         }
     }
-
-    private final LayoutInflater mInflater;
     private final Listener mListener;
+    private ViewMvcFactory mViewMvcFactory;
 
     private List<Question> mQuestions = new ArrayList<>();
 
-    public QuestionsRecyclerAdapter(LayoutInflater inflater, Listener listener) {
-        this.mInflater = inflater;
+    public QuestionsRecyclerAdapter(Listener listener, ViewMvcFactory viewMvcFactory) {
         this.mListener = listener;
+        this.mViewMvcFactory = viewMvcFactory;
     }
 
     public void bindQuestions(List<Question> questions) {
@@ -45,7 +45,7 @@ public class QuestionsRecyclerAdapter extends RecyclerView.Adapter<QuestionsRecy
     @NonNull
     @Override
     public QuestionsRecyclerAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        QuestionsListItemViewMvc viewMvc = new QuestionsListItemViewMvcImpl(mInflater, viewGroup);
+        QuestionsListItemViewMvc viewMvc = mViewMvcFactory.getQuestionsListItemViewMvc(viewGroup);
         viewMvc.registerListener(this);
         return new ViewHolder(viewMvc);
     }
