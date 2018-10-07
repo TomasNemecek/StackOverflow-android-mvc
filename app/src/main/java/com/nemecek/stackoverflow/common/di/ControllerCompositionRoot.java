@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.view.LayoutInflater;
 
 import com.nemecek.stackoverflow.networking.StackoverflowApi;
+import com.nemecek.stackoverflow.questions.FetchQuestionDetailsUseCase;
 import com.nemecek.stackoverflow.screens.common.ViewMvcFactory;
 
 public class ControllerCompositionRoot {
@@ -26,5 +27,9 @@ public class ControllerCompositionRoot {
 
     public ViewMvcFactory getViewMvcFactory() {
         return new ViewMvcFactory(getLayoutInflator());
+    }
+
+    public FetchQuestionDetailsUseCase getFetchQuestionDetailsUseCase() {
+        return new FetchQuestionDetailsUseCase(getStackOverflowApi());
     }
 }
