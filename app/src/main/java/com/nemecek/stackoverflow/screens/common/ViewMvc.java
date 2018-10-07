@@ -2,6 +2,6 @@ package com.nemecek.stackoverflow.screens.common;
 
 import android.view.View;
 
-public interface ViewMvcInterface {
+public interface ViewMvc {
     View getRootView();
 }
