@@ -4,12 +4,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.widget.Toast;
 
-import com.nemecek.stackoverflow.R;
 import com.nemecek.stackoverflow.questions.FetchQuestionDetailsUseCase;
 import com.nemecek.stackoverflow.questions.QuestionDetails;
 import com.nemecek.stackoverflow.screens.common.BaseActivity;
+import com.nemecek.stackoverflow.screens.common.MessagesDisplayer;
 
 public class QuestionDetailsActivity extends BaseActivity implements FetchQuestionDetailsUseCase.Listener {
 
@@ -22,6 +21,7 @@ public class QuestionDetailsActivity extends BaseActivity implements FetchQuesti
     }
 
     private FetchQuestionDetailsUseCase mFetchQuestionDetailsUseCase;
+    private MessagesDisplayer mMessagesDisplayer;
     private QuestionDetailsViewMvc mViewMvc;
 
     @Override
@@ -66,6 +66,6 @@ public class QuestionDetailsActivity extends BaseActivity implements FetchQuesti
     @Override
     public void onQuestionDetailsFetchFailed() {
         mViewMvc.hideProgressIndication();
-        Toast.makeText(this, R.string.error_network_call_failed, Toast.LENGTH_SHORT).show();
+        mMessagesDisplayer.showUseCaseError();
     }
 }
