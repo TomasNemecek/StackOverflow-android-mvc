@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 import com.nemecek.stackoverflow.R;
 import com.nemecek.stackoverflow.questions.QuestionDetails;
-import com.nemecek.stackoverflow.screens.common.BaseViewMvc;
+import com.nemecek.stackoverflow.screens.common.views.BaseViewMvc;
 
 public class QuestionDetailsViewMvcImpl extends BaseViewMvc implements QuestionDetailsViewMvc  {
 

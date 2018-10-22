@@ -2,11 +2,11 @@ package com.nemecek.stackoverflow.screens.questionslist;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
 import com.nemecek.stackoverflow.questions.Question;
 import com.nemecek.stackoverflow.screens.common.ViewMvcFactory;
+import com.nemecek.stackoverflow.screens.questionslist.questionslistitem.QuestionsListItemViewMvc;
 
 import java.util.ArrayList;
 import java.util.List;

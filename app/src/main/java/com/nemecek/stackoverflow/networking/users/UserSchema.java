@@ -1,4 +1,4 @@
-package com.nemecek.stackoverflow.networking;
+package com.nemecek.stackoverflow.networking.users;
 
 import com.google.gson.annotations.SerializedName;
 

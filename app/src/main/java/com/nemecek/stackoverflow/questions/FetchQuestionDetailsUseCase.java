@@ -1,9 +1,9 @@
 package com.nemecek.stackoverflow.questions;
 
 import com.nemecek.stackoverflow.common.BaseObservable;
-import com.nemecek.stackoverflow.networking.QuestionDetailsResponseSchema;
-import com.nemecek.stackoverflow.networking.QuestionSchema;
 import com.nemecek.stackoverflow.networking.StackoverflowApi;
+import com.nemecek.stackoverflow.networking.questions.QuestionDetailsResponseSchema;
+import com.nemecek.stackoverflow.networking.questions.QuestionSchema;
 
 import retrofit2.Call;
 import retrofit2.Callback;

@@ -1,4 +1,4 @@
-package com.nemecek.stackoverflow.screens.common;
+package com.nemecek.stackoverflow.screens.common.controllers;
 
 import android.support.v7.app.AppCompatActivity;
 

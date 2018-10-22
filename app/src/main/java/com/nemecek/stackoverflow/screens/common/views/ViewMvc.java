@@ -1,4 +1,4 @@
-package com.nemecek.stackoverflow.screens.common;
+package com.nemecek.stackoverflow.screens.common.views;
 
 import android.view.View;
 

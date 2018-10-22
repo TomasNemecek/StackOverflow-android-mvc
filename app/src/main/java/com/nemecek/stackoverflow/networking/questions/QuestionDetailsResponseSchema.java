@@ -1,4 +1,4 @@
-package com.nemecek.stackoverflow.networking;
+package com.nemecek.stackoverflow.networking.questions;
 
 import com.google.gson.annotations.SerializedName;
 

@@ -2,8 +2,8 @@ package com.nemecek.stackoverflow.screens.questionslist;
 
 import com.nemecek.stackoverflow.questions.FetchLastActiveQuestionsUseCase;
 import com.nemecek.stackoverflow.questions.Question;
-import com.nemecek.stackoverflow.screens.common.MessagesDisplayer;
-import com.nemecek.stackoverflow.screens.common.ScreensNavigator;
+import com.nemecek.stackoverflow.screens.common.screensnavigator.ScreensNavigator;
+import com.nemecek.stackoverflow.screens.common.toastshelper.ToastsHelper;
 
 import java.util.List;
 
@@ -11,14 +11,14 @@ public class QuestionsListController implements QuestionsListViewMvcImpl.Listene
 
     private final FetchLastActiveQuestionsUseCase mFetchLastActiveQuestionsUseCase;
     private final ScreensNavigator mScreensNavigator;
-    private final MessagesDisplayer mMessagesDisplayer;
+    private final ToastsHelper mToastsHelper;
 
     private QuestionsListViewMvc mViewMvc;
 
-    public QuestionsListController(FetchLastActiveQuestionsUseCase fetchLastActiveQuestionsUseCase, ScreensNavigator screensNavigator, MessagesDisplayer messagesDisplayer) {
+    public QuestionsListController(FetchLastActiveQuestionsUseCase fetchLastActiveQuestionsUseCase, ScreensNavigator screensNavigator, ToastsHelper toastsHelper) {
         mFetchLastActiveQuestionsUseCase = fetchLastActiveQuestionsUseCase;
         mScreensNavigator = screensNavigator;
-        mMessagesDisplayer = messagesDisplayer;
+        mToastsHelper = toastsHelper;
     }
 
     public void bindView(QuestionsListViewMvc viewMvc) {
@@ -52,6 +52,6 @@ public class QuestionsListController implements QuestionsListViewMvcImpl.Listene
     @Override
     public void onLastActiveQuestionsFetchFailed() {
         mViewMvc.hideProgressIndication();
-        mMessagesDisplayer.showUseCaseError();
+        mToastsHelper.showUseCaseError();
     }
 }

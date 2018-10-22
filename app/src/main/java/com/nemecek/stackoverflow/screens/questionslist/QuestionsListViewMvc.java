@@ -1,7 +1,7 @@
 package com.nemecek.stackoverflow.screens.questionslist;
 
 import com.nemecek.stackoverflow.questions.Question;
-import com.nemecek.stackoverflow.screens.common.ObservableViewMvc;
+import com.nemecek.stackoverflow.screens.common.views.ObservableViewMvc;
 
 import java.util.List;
 

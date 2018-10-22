@@ -7,8 +7,8 @@ import android.support.annotation.Nullable;
 
 import com.nemecek.stackoverflow.questions.FetchQuestionDetailsUseCase;
 import com.nemecek.stackoverflow.questions.QuestionDetails;
-import com.nemecek.stackoverflow.screens.common.BaseActivity;
-import com.nemecek.stackoverflow.screens.common.MessagesDisplayer;
+import com.nemecek.stackoverflow.screens.common.controllers.BaseActivity;
+import com.nemecek.stackoverflow.screens.common.toastshelper.ToastsHelper;
 
 public class QuestionDetailsActivity extends BaseActivity implements FetchQuestionDetailsUseCase.Listener {
 
@@ -21,7 +21,7 @@ public class QuestionDetailsActivity extends BaseActivity implements FetchQuesti
     }
 
     private FetchQuestionDetailsUseCase mFetchQuestionDetailsUseCase;
-    private MessagesDisplayer mMessagesDisplayer;
+    private ToastsHelper mToastsHelper;
     private QuestionDetailsViewMvc mViewMvc;
 
     @Override
@@ -66,6 +66,6 @@ public class QuestionDetailsActivity extends BaseActivity implements FetchQuesti
     @Override
     public void onQuestionDetailsFetchFailed() {
         mViewMvc.hideProgressIndication();
-        mMessagesDisplayer.showUseCaseError();
+        mToastsHelper.showUseCaseError();
     }
 }

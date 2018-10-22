@@ -1,4 +1,4 @@
-package com.nemecek.stackoverflow.screens.common;
+package com.nemecek.stackoverflow.screens.common.screensnavigator;
 
 import android.content.Context;
 

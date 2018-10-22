@@ -1,16 +1,16 @@
-package com.nemecek.stackoverflow.screens.common;
+package com.nemecek.stackoverflow.screens.common.toastshelper;
 
 import android.content.Context;
 import android.widget.Toast;
 
 import com.nemecek.stackoverflow.R;
 
-public class MessagesDisplayer {
+public class ToastsHelper {
 
 
     private final Context mContext;
 
-    public MessagesDisplayer(Context context) {
+    public ToastsHelper(Context context) {
         mContext = context;
     }
 

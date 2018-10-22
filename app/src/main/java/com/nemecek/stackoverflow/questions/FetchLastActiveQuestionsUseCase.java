@@ -2,9 +2,9 @@ package com.nemecek.stackoverflow.questions;
 
 import com.nemecek.stackoverflow.common.BaseObservable;
 import com.nemecek.stackoverflow.common.Constants;
-import com.nemecek.stackoverflow.networking.QuestionSchema;
-import com.nemecek.stackoverflow.networking.QuestionsListResponseSchema;
 import com.nemecek.stackoverflow.networking.StackoverflowApi;
+import com.nemecek.stackoverflow.networking.questions.QuestionSchema;
+import com.nemecek.stackoverflow.networking.questions.QuestionsListResponseSchema;
 
 import java.util.ArrayList;
 import java.util.List;

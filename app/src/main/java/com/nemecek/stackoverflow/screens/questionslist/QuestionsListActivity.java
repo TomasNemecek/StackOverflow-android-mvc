@@ -2,7 +2,7 @@ package com.nemecek.stackoverflow.screens.questionslist;
 
 import android.os.Bundle;
 
-import com.nemecek.stackoverflow.screens.common.BaseActivity;
+import com.nemecek.stackoverflow.screens.common.controllers.BaseActivity;
 
 
 public class QuestionsListActivity extends BaseActivity {

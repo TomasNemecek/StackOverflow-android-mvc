@@ -1,6 +1,7 @@
-package com.nemecek.stackoverflow.networking;
+package com.nemecek.stackoverflow.networking.questions;
 
 import com.google.gson.annotations.SerializedName;
+import com.nemecek.stackoverflow.networking.users.UserSchema;
 
 public class QuestionSchema {
 

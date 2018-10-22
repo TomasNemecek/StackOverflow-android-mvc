@@ -1,4 +1,4 @@
-package com.nemecek.stackoverflow.screens.common;
+package com.nemecek.stackoverflow.screens.common.views;
 
 import java.util.Collections;
 import java.util.HashSet;

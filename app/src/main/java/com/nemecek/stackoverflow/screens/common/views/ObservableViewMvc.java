@@ -1,4 +1,4 @@
-package com.nemecek.stackoverflow.screens.common;
+package com.nemecek.stackoverflow.screens.common.views;
 
 public interface ObservableViewMvc<ListenerType> extends ViewMvc {
 

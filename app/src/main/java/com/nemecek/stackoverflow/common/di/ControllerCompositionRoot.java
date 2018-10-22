@@ -7,9 +7,9 @@ import android.view.LayoutInflater;
 import com.nemecek.stackoverflow.networking.StackoverflowApi;
 import com.nemecek.stackoverflow.questions.FetchLastActiveQuestionsUseCase;
 import com.nemecek.stackoverflow.questions.FetchQuestionDetailsUseCase;
-import com.nemecek.stackoverflow.screens.common.MessagesDisplayer;
-import com.nemecek.stackoverflow.screens.common.ScreensNavigator;
 import com.nemecek.stackoverflow.screens.common.ViewMvcFactory;
+import com.nemecek.stackoverflow.screens.common.screensnavigator.ScreensNavigator;
+import com.nemecek.stackoverflow.screens.common.toastshelper.ToastsHelper;
 import com.nemecek.stackoverflow.screens.questionslist.QuestionsListController;
 
 public class ControllerCompositionRoot {
@@ -51,8 +51,8 @@ public class ControllerCompositionRoot {
         return mActivity;
     }
 
-    private MessagesDisplayer getMessagesDisplayer() {
-        return new MessagesDisplayer(getContext());
+    private ToastsHelper getMessagesDisplayer() {
+        return new ToastsHelper(getContext());
     }
 
     private ScreensNavigator getScreensNavigator() {

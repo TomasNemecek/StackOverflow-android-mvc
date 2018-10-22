@@ -1,5 +1,8 @@
 package com.nemecek.stackoverflow.networking;
 
+import com.nemecek.stackoverflow.networking.questions.QuestionDetailsResponseSchema;
+import com.nemecek.stackoverflow.networking.questions.QuestionsListResponseSchema;
+
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Path;

@@ -9,8 +9,8 @@ import android.widget.ProgressBar;
 
 import com.nemecek.stackoverflow.R;
 import com.nemecek.stackoverflow.questions.Question;
-import com.nemecek.stackoverflow.screens.common.BaseObservableViewMvc;
 import com.nemecek.stackoverflow.screens.common.ViewMvcFactory;
+import com.nemecek.stackoverflow.screens.common.views.BaseObservableViewMvc;
 
 import java.util.List;
 
