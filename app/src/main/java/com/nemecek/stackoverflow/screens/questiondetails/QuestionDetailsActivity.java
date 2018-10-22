@@ -7,7 +7,6 @@ import android.support.annotation.Nullable;
 import android.widget.Toast;
 
 import com.nemecek.stackoverflow.R;
-import com.nemecek.stackoverflow.networking.StackoverflowApi;
 import com.nemecek.stackoverflow.questions.FetchQuestionDetailsUseCase;
 import com.nemecek.stackoverflow.questions.QuestionDetails;
 import com.nemecek.stackoverflow.screens.common.BaseActivity;

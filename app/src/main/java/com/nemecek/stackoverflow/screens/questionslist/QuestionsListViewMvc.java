@@ -9,5 +9,10 @@ public interface QuestionsListViewMvc extends ObservableViewMvc<QuestionsListVie
     interface Listener {
         void onQuestionClicked(Question question);
     }
+
+    void showProgressIndication();
+
+    void hideProgressIndication();
+
     void bindQuestions(List<Question> questions);
 }

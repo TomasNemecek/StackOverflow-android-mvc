@@ -4,24 +4,17 @@ import android.os.Bundle;
 import android.widget.Toast;
 
 import com.nemecek.stackoverflow.R;
-import com.nemecek.stackoverflow.common.Constants;
-import com.nemecek.stackoverflow.networking.QuestionSchema;
-import com.nemecek.stackoverflow.networking.QuestionsListResponseSchema;
-import com.nemecek.stackoverflow.networking.StackoverflowApi;
+import com.nemecek.stackoverflow.questions.FetchLastActiveQuestionsUseCase;
 import com.nemecek.stackoverflow.questions.Question;
-import com.nemecek.stackoverflow.screens.questiondetails.QuestionDetailsActivity;
 import com.nemecek.stackoverflow.screens.common.BaseActivity;
+import com.nemecek.stackoverflow.screens.questiondetails.QuestionDetailsActivity;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
-public class QuestionsListActivity extends BaseActivity implements QuestionsListViewMvcImpl.Listener {
+public class QuestionsListActivity extends BaseActivity implements QuestionsListViewMvcImpl.Listener, FetchLastActiveQuestionsUseCase.Listener {
 
-    private StackoverflowApi mStackoverflowApi;
+    private FetchLastActiveQuestionsUseCase mFetchLastActiveQuestionsUseCase;
 
     private QuestionsListViewMvc mViewMvc;
 
@@ -33,7 +26,7 @@ public class QuestionsListActivity extends BaseActivity implements QuestionsList
         mViewMvc.registerListener(this);
         setContentView(mViewMvc.getRootView());
 
-        mStackoverflowApi = getCompositionRoot().getStackOverflowApi();
+        mFetchLastActiveQuestionsUseCase = getCompositionRoot().getFetchLastActiveQuestionsUseCase();
 
         setContentView(mViewMvc.getRootView());
     }
@@ -41,33 +34,19 @@ public class QuestionsListActivity extends BaseActivity implements QuestionsList
     @Override
     protected void onStart() {
         super.onStart();
-        fetchQuestions();
+        mFetchLastActiveQuestionsUseCase.registerListener(this);
+
+        mViewMvc.showProgressIndication();
+        mFetchLastActiveQuestionsUseCase.fetchLastActiveQuestionsAndNotify();
     }
 
-    private void fetchQuestions() {
-        mStackoverflowApi.fetchLastActiveQuestions(Constants.QUESTIONS_LIST_PAGE_SIZE)
-                .enqueue(new Callback<QuestionsListResponseSchema>() {
-                    @Override
-                    public void onResponse(Call<QuestionsListResponseSchema> call, Response<QuestionsListResponseSchema> response) {
-                        if (response.isSuccessful()) {
-                            bindQuestions(response.body().getQuestions());
-                        } else {
-                            networkCallFailed();
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Call<QuestionsListResponseSchema> call, Throwable t) {
-                        networkCallFailed();
-                    }
-                } );
+    @Override
+    protected void onStop() {
+        super.onStop();
+        mFetchLastActiveQuestionsUseCase.unregisterListener(this);
     }
 
-    private void bindQuestions(List<QuestionSchema> questionSchemas) {
-        List<Question> questions = new ArrayList<>(questionSchemas.size());
-        for (QuestionSchema questionSchema : questionSchemas) {
-            questions.add(new Question(questionSchema.getId(), questionSchema.getTitle()));
-        }
+    private void bindQuestions(List<Question> questions) {
         mViewMvc.bindQuestions(questions);
     }
 
@@ -78,5 +57,17 @@ public class QuestionsListActivity extends BaseActivity implements QuestionsList
     @Override
     public void onQuestionClicked(Question question) {
         QuestionDetailsActivity.start(this, question.getId());
+    }
+
+    @Override
+    public void onLastActiveQuestionsFetched(List<Question> questions) {
+        mViewMvc.hideProgressIndication();
+        bindQuestions(questions);
+    }
+
+    @Override
+    public void onLastActiveQuestionsFetchFailed() {
+        mViewMvc.hideProgressIndication();
+        networkCallFailed();
     }
 }
