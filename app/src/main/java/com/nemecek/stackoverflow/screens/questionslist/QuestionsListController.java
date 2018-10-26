@@ -44,6 +44,11 @@ public class QuestionsListController implements QuestionsListViewMvcImpl.Listene
     }
 
     @Override
+    public void onQuestionListClicked() {
+        //This is the questions list screen -> no-op
+    }
+
+    @Override
     public void onLastActiveQuestionsFetched(List<Question> questions) {
         mViewMvc.hideProgressIndication();
         mViewMvc.bindQuestions(questions);
@@ -53,5 +58,14 @@ public class QuestionsListController implements QuestionsListViewMvcImpl.Listene
     public void onLastActiveQuestionsFetchFailed() {
         mViewMvc.hideProgressIndication();
         mToastsHelper.showUseCaseError();
+    }
+
+    public boolean onBackPressed() {
+        if(mViewMvc.isDrawerOpen()) {
+            mViewMvc.closeDrawer();
+            return true;
+        } else {
+            return false;
+        }
     }
 }

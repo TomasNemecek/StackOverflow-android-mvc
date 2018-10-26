@@ -8,6 +8,8 @@ import android.support.annotation.Nullable;
 import com.nemecek.stackoverflow.questions.FetchQuestionDetailsUseCase;
 import com.nemecek.stackoverflow.questions.QuestionDetails;
 import com.nemecek.stackoverflow.screens.common.controllers.BaseActivity;
+import com.nemecek.stackoverflow.screens.common.navdrawer.DrawerItems;
+import com.nemecek.stackoverflow.screens.common.screensnavigator.ScreensNavigator;
 import com.nemecek.stackoverflow.screens.common.toastshelper.ToastsHelper;
 
 public class QuestionDetailsActivity extends BaseActivity implements FetchQuestionDetailsUseCase.Listener, QuestionDetailsViewMvc.Listener {
@@ -22,6 +24,7 @@ public class QuestionDetailsActivity extends BaseActivity implements FetchQuesti
 
     private FetchQuestionDetailsUseCase mFetchQuestionDetailsUseCase;
     private ToastsHelper mToastsHelper;
+    private ScreensNavigator mScreensNavigator;
     private QuestionDetailsViewMvc mViewMvc;
 
     @Override
@@ -30,6 +33,7 @@ public class QuestionDetailsActivity extends BaseActivity implements FetchQuesti
 
         mFetchQuestionDetailsUseCase = getCompositionRoot().getFetchQuestionDetailsUseCase();
         mToastsHelper = getCompositionRoot().getToastHelper();
+        mScreensNavigator = getCompositionRoot().getScreensNavigator();
         mViewMvc = getCompositionRoot().getViewMvcFactory().getQuestionDetailsViewMvc(null);
         setContentView(mViewMvc.getRootView());
     }
@@ -73,7 +77,24 @@ public class QuestionDetailsActivity extends BaseActivity implements FetchQuesti
     }
 
     @Override
+    public void onBackPressed() {
+        if(mViewMvc.isDrawerOpen()) {
+            mViewMvc.closeDrawer();
+        } else {
+            super.onBackPressed();
+        }
+    }
+
+    @Override
     public void onNavigateUpClicked() {
         onBackPressed();
+    }
+
+    @Override
+    public void onDrawerItemClicked(DrawerItems item) {
+        switch (item) {
+            case QUESTIONS_LIST:
+                mScreensNavigator.toQuestionsListClearTop();
+        }
     }
 }

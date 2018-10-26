@@ -12,11 +12,12 @@ import com.nemecek.stackoverflow.R;
 import com.nemecek.stackoverflow.questions.Question;
 import com.nemecek.stackoverflow.screens.common.ToolBarViewMvc;
 import com.nemecek.stackoverflow.screens.common.ViewMvcFactory;
-import com.nemecek.stackoverflow.screens.common.views.BaseObservableViewMvc;
+import com.nemecek.stackoverflow.screens.common.navdrawer.BaseNavDrawerViewMvc;
+import com.nemecek.stackoverflow.screens.common.navdrawer.DrawerItems;
 
 import java.util.List;
 
-public class QuestionsListViewMvcImpl extends BaseObservableViewMvc<QuestionsListViewMvc.Listener> implements QuestionsRecyclerAdapter.Listener, QuestionsListViewMvc {
+public class QuestionsListViewMvcImpl extends BaseNavDrawerViewMvc<QuestionsListViewMvc.Listener> implements QuestionsRecyclerAdapter.Listener, QuestionsListViewMvc {
 
     private final ToolBarViewMvc mToolBarViewMvc;
 
@@ -26,6 +27,8 @@ public class QuestionsListViewMvcImpl extends BaseObservableViewMvc<QuestionsLis
     private final QuestionsRecyclerAdapter mQuestionsListAdapter;
 
     public QuestionsListViewMvcImpl(LayoutInflater inflater, ViewGroup parent, ViewMvcFactory viewMvcFactory) {
+        super(inflater, parent);
+
         setRootView(inflater.inflate(R.layout.layout_questions_list, parent, false));
 
         mProgressBar = findViewById(R.id.progress);
@@ -37,14 +40,35 @@ public class QuestionsListViewMvcImpl extends BaseObservableViewMvc<QuestionsLis
 
         mToolbar = findViewById(R.id.toolbar);
         mToolBarViewMvc = viewMvcFactory.getToolBarViewMvc(mToolbar);
+        initToolbar();
+    }
+
+    private void initToolbar() {
         mToolBarViewMvc.setTitle(getContext().getString(R.string.questions_list_screen_title));
         mToolbar.addView(mToolBarViewMvc.getRootView());
+        mToolBarViewMvc.enableHamburgerButtonAndListen(new ToolBarViewMvc.HamburgerClickListener() {
+            @Override
+            public void onHamburgerClicked() {
+                openDrawer();
+            }
+        });
     }
 
     @Override
     public void onQuestionClicked(Question question) {
         for(Listener listener : getListeners()) {
             listener.onQuestionClicked(question);
+        }
+    }
+
+    @Override
+    protected void onDrawerItemClicked(DrawerItems item) {
+        for(Listener listener : getListeners()) {
+            switch (item) {
+                case QUESTIONS_LIST:
+                    listener.onQuestionListClicked();
+                    break;
+            }
         }
     }
 
@@ -62,4 +86,5 @@ public class QuestionsListViewMvcImpl extends BaseObservableViewMvc<QuestionsLis
     public void bindQuestions(List<Question> questions) {
         mQuestionsListAdapter.bindQuestions(questions);
     }
+
 }

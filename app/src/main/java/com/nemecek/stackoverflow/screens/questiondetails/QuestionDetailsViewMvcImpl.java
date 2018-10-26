@@ -12,9 +12,10 @@ import com.nemecek.stackoverflow.R;
 import com.nemecek.stackoverflow.questions.QuestionDetails;
 import com.nemecek.stackoverflow.screens.common.ToolBarViewMvc;
 import com.nemecek.stackoverflow.screens.common.ViewMvcFactory;
-import com.nemecek.stackoverflow.screens.common.views.BaseObservableViewMvc;
+import com.nemecek.stackoverflow.screens.common.navdrawer.BaseNavDrawerViewMvc;
+import com.nemecek.stackoverflow.screens.common.navdrawer.DrawerItems;
 
-public class QuestionDetailsViewMvcImpl extends BaseObservableViewMvc<QuestionDetailsViewMvc.Listener> implements QuestionDetailsViewMvc  {
+public class QuestionDetailsViewMvcImpl extends BaseNavDrawerViewMvc<QuestionDetailsViewMvc.Listener> implements QuestionDetailsViewMvc  {
 
     private final ToolBarViewMvc mToolBarViewMvc;
     private final Toolbar mToolbar;
@@ -24,6 +25,7 @@ public class QuestionDetailsViewMvcImpl extends BaseObservableViewMvc<QuestionDe
     private TextView mTxtQuestionBody;
 
     public QuestionDetailsViewMvcImpl(LayoutInflater inflater, ViewGroup parent, ViewMvcFactory viewMvcFactory) {
+        super(inflater, parent);
         setRootView(inflater.inflate(R.layout.layout_question_detail, parent, false));
         mProgressBar = findViewById(R.id.progress);
         mTxtQuestionTitle = findViewById(R.id.txt_question_title);
@@ -47,6 +49,13 @@ public class QuestionDetailsViewMvcImpl extends BaseObservableViewMvc<QuestionDe
                 }
             }
         });
+    }
+
+    @Override
+    public void onDrawerItemClicked(DrawerItems item){
+        for(Listener listener : getListeners()) {
+            listener.onDrawerItemClicked(item);
+        }
     }
 
     @Override

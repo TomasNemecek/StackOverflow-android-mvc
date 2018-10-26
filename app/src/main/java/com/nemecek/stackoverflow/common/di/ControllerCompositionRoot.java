@@ -55,7 +55,7 @@ public class ControllerCompositionRoot {
         return new ToastsHelper(getContext());
     }
 
-    private ScreensNavigator getScreensNavigator() {
+    public ScreensNavigator getScreensNavigator() {
         return new ScreensNavigator(getContext());
     }
 }

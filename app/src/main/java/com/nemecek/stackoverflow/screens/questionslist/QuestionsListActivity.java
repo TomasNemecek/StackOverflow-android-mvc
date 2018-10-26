@@ -1,11 +1,19 @@
 package com.nemecek.stackoverflow.screens.questionslist;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.nemecek.stackoverflow.screens.common.controllers.BaseActivity;
 
 
 public class QuestionsListActivity extends BaseActivity {
+
+    public static void startClearTop(Context context) {
+        Intent intent = new Intent(context, QuestionsListActivity.class);
+        intent.setFlags(intent.getFlags() | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        context.startActivity(intent);
+    }
 
     private QuestionsListController mQuestionsListController;
 
@@ -32,4 +40,11 @@ public class QuestionsListActivity extends BaseActivity {
         mQuestionsListController.onStop();
     }
 
+
+    @Override
+    public void onBackPressed() {
+        if(!mQuestionsListController.onBackPressed()){
+            super.onBackPressed();
+        }
+    }
 }
