@@ -44,14 +44,14 @@ public class ControllerCompositionRoot {
     }
 
     public QuestionsListController getQuestionsListController() {
-        return new QuestionsListController(getFetchLastActiveQuestionsUseCase(), getScreensNavigator(), getMessagesDisplayer());
+        return new QuestionsListController(getFetchLastActiveQuestionsUseCase(), getScreensNavigator(), getToastHelper());
     }
 
     private Context getContext() {
         return mActivity;
     }
 
-    private ToastsHelper getMessagesDisplayer() {
+    public ToastsHelper getToastHelper() {
         return new ToastsHelper(getContext());
     }
 
