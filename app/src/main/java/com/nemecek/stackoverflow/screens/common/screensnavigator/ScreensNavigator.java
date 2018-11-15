@@ -1,23 +1,26 @@
 package com.nemecek.stackoverflow.screens.common.screensnavigator;
 
-import android.content.Context;
-
-import com.nemecek.stackoverflow.screens.questiondetails.QuestionDetailsActivity;
-import com.nemecek.stackoverflow.screens.questionslist.QuestionsListActivity;
+import com.nemecek.stackoverflow.screens.common.fragmentframehelper.FragmentFrameHelper;
+import com.nemecek.stackoverflow.screens.questiondetails.QuestionDetailsFragment;
+import com.nemecek.stackoverflow.screens.questionslist.QuestionsListFragment;
 
 public class ScreensNavigator {
+    
+    private final FragmentFrameHelper mFragmentFrameHelper;
 
-    private final Context mContext;
-
-    public ScreensNavigator(Context context) {
-        mContext = context;
+    public ScreensNavigator(FragmentFrameHelper fragmentFrameHelper) {
+        mFragmentFrameHelper = fragmentFrameHelper;
     }
 
-    public void toDialogDetails(String questionId) {
-        QuestionDetailsActivity.start(mContext, questionId);
+    public void toQuestionDetails(String questionId) {
+        mFragmentFrameHelper.replaceFragment(QuestionDetailsFragment.newInstance(questionId));
     }
 
-    public void toQuestionsListClearTop() {
-        QuestionsListActivity.startClearTop(mContext);
+    public void toQuestionsList() {
+        mFragmentFrameHelper.replaceFragmentAndClearBackstack(QuestionsListFragment.newInstance());
+    }
+
+    public void navigateUp() {
+        mFragmentFrameHelper.navigateUp();
     }
 }

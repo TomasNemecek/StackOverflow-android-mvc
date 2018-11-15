@@ -1,62 +1,75 @@
 package com.nemecek.stackoverflow.screens.questiondetails;
 
-import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import com.nemecek.stackoverflow.questions.FetchQuestionDetailsUseCase;
 import com.nemecek.stackoverflow.questions.QuestionDetails;
-import com.nemecek.stackoverflow.screens.common.controllers.BaseActivity;
+import com.nemecek.stackoverflow.screens.common.controllers.BackPressDispatcher;
+import com.nemecek.stackoverflow.screens.common.controllers.BackPressListener;
+import com.nemecek.stackoverflow.screens.common.controllers.BaseFragment;
 import com.nemecek.stackoverflow.screens.common.navdrawer.DrawerItems;
 import com.nemecek.stackoverflow.screens.common.screensnavigator.ScreensNavigator;
 import com.nemecek.stackoverflow.screens.common.toastshelper.ToastsHelper;
 
-public class QuestionDetailsActivity extends BaseActivity implements FetchQuestionDetailsUseCase.Listener, QuestionDetailsViewMvc.Listener {
+public class QuestionDetailsFragment extends BaseFragment implements FetchQuestionDetailsUseCase.Listener, QuestionDetailsViewMvc.Listener, BackPressListener{
 
-    public static final String EXTRA_QUESTION_ID = "EXTRA_QUESTION_ID";
+    private static final String ARG_QUESTION_ID = "ARG_QUESTION_ID";
 
-    public static void start(Context context, String questionId) {
-        Intent intent = new Intent(context, QuestionDetailsActivity.class);
-        intent.putExtra(EXTRA_QUESTION_ID, questionId);
-        context.startActivity(intent);
+    public static QuestionDetailsFragment newInstance(String questionId) {
+        Bundle args = new Bundle();
+        args.putString(ARG_QUESTION_ID, questionId);
+        
+        QuestionDetailsFragment fragment = new QuestionDetailsFragment();
+        fragment.setArguments(args);
+        return fragment;
     }
 
     private FetchQuestionDetailsUseCase mFetchQuestionDetailsUseCase;
+
     private ToastsHelper mToastsHelper;
     private ScreensNavigator mScreensNavigator;
+    private BackPressDispatcher mBackPressDispatcher;
+
     private QuestionDetailsViewMvc mViewMvc;
 
+    @Nullable
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mFetchQuestionDetailsUseCase = getCompositionRoot().getFetchQuestionDetailsUseCase();
         mToastsHelper = getCompositionRoot().getToastHelper();
         mScreensNavigator = getCompositionRoot().getScreensNavigator();
-        mViewMvc = getCompositionRoot().getViewMvcFactory().getQuestionDetailsViewMvc(null);
-        setContentView(mViewMvc.getRootView());
+        mBackPressDispatcher = getCompositionRoot().getBackPressDispatcher();
+        mViewMvc = getCompositionRoot().getViewMvcFactory().getQuestionDetailsViewMvc(container);
+        return mViewMvc.getRootView();
     }
 
     @Override
-    protected void onStart() {
+    public void onStart() {
         super.onStart();
         mFetchQuestionDetailsUseCase.registerListener(this);
         mViewMvc.registerListener(this);
+        mBackPressDispatcher.registerListener(this);
+
         mViewMvc.showProgressIndication();
 
         mFetchQuestionDetailsUseCase.fetchQuestionDetailsAndNotify(getQuestionId());
     }
 
     @Override
-    protected void onStop() {
+    public void onStop() {
         super.onStop();
         mViewMvc.unregisterListener(this);
+        mBackPressDispatcher.unregisterListener(this);
         mFetchQuestionDetailsUseCase.unregisterListener(this);
     }
 
     private String getQuestionId() {
-        return getIntent().getStringExtra(EXTRA_QUESTION_ID);
+        return getArguments().getString(ARG_QUESTION_ID);
     }
 
     private void bindQuestionDetails(QuestionDetails questionDetails) {
@@ -77,24 +90,25 @@ public class QuestionDetailsActivity extends BaseActivity implements FetchQuesti
     }
 
     @Override
-    public void onBackPressed() {
+    public boolean onBackPressed() {
         if(mViewMvc.isDrawerOpen()) {
             mViewMvc.closeDrawer();
+            return true;
         } else {
-            super.onBackPressed();
+            return false;
         }
     }
 
     @Override
     public void onNavigateUpClicked() {
-        onBackPressed();
+        mScreensNavigator.navigateUp();
     }
 
     @Override
     public void onDrawerItemClicked(DrawerItems item) {
         switch (item) {
             case QUESTIONS_LIST:
-                mScreensNavigator.toQuestionsListClearTop();
+                mScreensNavigator.toQuestionsList();
         }
     }
 }
