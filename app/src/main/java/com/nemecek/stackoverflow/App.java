@@ -2,19 +2,24 @@ package com.nemecek.stackoverflow;
 
 import android.app.Application;
 
-import com.nemecek.stackoverflow.common.di.CompositionRoot;
+import com.nemecek.stackoverflow.common.di.application.ApplicationComponent;
+import com.nemecek.stackoverflow.common.di.application.ApplicationModule;
+import com.nemecek.stackoverflow.common.di.application.DaggerApplicationComponent;
 
 public class App extends Application {
 
-    private CompositionRoot mCompositionRoot;
+    private ApplicationComponent mApplicationComponent;
 
     @Override
     public void onCreate() {
         super.onCreate();
-        mCompositionRoot = new CompositionRoot();
+        mApplicationComponent = DaggerApplicationComponent.builder()
+                .applicationModule(new ApplicationModule())
+                .build();
     }
 
-    public CompositionRoot getCompositionRoot() {
-        return mCompositionRoot;
+    public ApplicationComponent getApplicationComponent() {
+        return mApplicationComponent;
     }
+
 }

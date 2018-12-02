@@ -5,7 +5,7 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 
-import com.nemecek.stackoverflow.networking.StackoverflowApi;
+import com.nemecek.stackoverflow.common.di.application.ApplicationComponent;
 import com.nemecek.stackoverflow.questions.FetchLastActiveQuestionsUseCase;
 import com.nemecek.stackoverflow.questions.FetchQuestionDetailsUseCase;
 import com.nemecek.stackoverflow.screens.common.ViewMvcFactory;
@@ -18,12 +18,11 @@ import com.nemecek.stackoverflow.screens.questionslist.QuestionsListController;
 
 public class ControllerCompositionRoot {
 
-    private final CompositionRoot mCompositionRoot;
-    private FragmentActivity mActivity;
-    private QuestionsListController mQuestionsListController;
+    private final ApplicationComponent mApplicationComponent;
+    private final FragmentActivity mActivity;
 
-    public ControllerCompositionRoot(CompositionRoot compositionRoot, FragmentActivity activity) {
-        this.mCompositionRoot = compositionRoot;
+    public ControllerCompositionRoot(ApplicationComponent applicationComponent, FragmentActivity activity) {
+        this.mApplicationComponent = applicationComponent;
         this.mActivity = activity;
     }
 
@@ -39,10 +38,6 @@ public class ControllerCompositionRoot {
         return getActivity().getSupportFragmentManager();
     }
 
-    private StackoverflowApi getStackOverflowApi() {
-        return mCompositionRoot.getStackOverflowApi();
-    }
-
     private LayoutInflater getLayoutInflator() {
         return LayoutInflater.from(mActivity);
     }
@@ -52,11 +47,11 @@ public class ControllerCompositionRoot {
     }
 
     public FetchQuestionDetailsUseCase getFetchQuestionDetailsUseCase() {
-        return new FetchQuestionDetailsUseCase(getStackOverflowApi());
+        return mApplicationComponent.getFetchQuestionDetailsUseCase();
     }
 
     public FetchLastActiveQuestionsUseCase getFetchLastActiveQuestionsUseCase() {
-        return new FetchLastActiveQuestionsUseCase(getStackOverflowApi());
+        return mApplicationComponent.getFetchLastActiveQuestionsUseCase();
     }
 
     public QuestionsListController getQuestionsListController() {
